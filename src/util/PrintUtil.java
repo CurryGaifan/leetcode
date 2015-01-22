@@ -29,6 +29,15 @@ public class PrintUtil {
 		System.out.println();
 	}
 
+	public static <T> void printArray(T[][] array) {
+		for (T[] t : array) {
+			for (T i : t)
+				System.out.print(i + " ");
+			System.out.println();
+		}
+
+	}
+
 	public static void printArray(char[] array) {
 		for (char i : array)
 			System.out.print(i + " ");
@@ -39,5 +48,31 @@ public class PrintUtil {
 		for (int i : array)
 			System.out.print(i + " ");
 		System.out.println();
+	}
+
+	public static void printArray(int[][] array) {
+		for (int[] t : array) {
+			for (int i : t)
+				System.out.print(i + " ");
+			System.out.println();
+		}
+	}
+
+	public static <T> void printVectorVector(Vector<Vector<T>> v) {
+		for (Vector<T> t : v) {
+			for (T i : t)
+				System.out.print(i + " ");
+			System.out.println();
+		}
+
+	}
+
+	public static <T> void printListList(List<List<T>> v) {
+		for (List<T> t : v) {
+			for (T i : t)
+				System.out.print(i + " ");
+			System.out.println();
+		}
+
 	}
 }
