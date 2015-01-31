@@ -10,25 +10,21 @@ package leetcode;
  */
 public class JumpGame {
 	public boolean canJump(int[] A) {
-
-		return canJump(A, 0);
-
-	}
-
-	private boolean canJump(int[] A, int index) {
-		if (index == A.length - 1)
-			return true;
-		if (index > A.length - 1)
-			return false;
-		for (int i = 1; i <= A[index]; i++) {
-			if (canJump(A, index + i))
-				return true;
+		int jumpIndex = 0;
+		for (int i = 0; i < A.length - 1; i++) {
+			if (A[i] == 0) {
+				if (jumpIndex <= i)
+					return false;
+			} else if (A[i] > 0) {
+				jumpIndex = Math.max(jumpIndex, i + A[i]);
+			}
 		}
-		return false;
+
+		return true;
 
 	}
 
 	public static void main(String[] args) {
-		System.out.println(new JumpGame().canJump(new int[] {1}));
+		System.out.println(new JumpGame().canJump(new int[] { 0 }));
 	}
 }
