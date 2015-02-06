@@ -4,7 +4,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import leetcode.struct.ListNode;
+
 public class PrintUtil {
+
+	public static void printListNode(ListNode l) {
+		while (l != null && l.next != null && l.next.next != null) {
+			System.out.print(l.val + "->");
+			l = l.next;
+		}
+		if (l != null) {
+
+			if (l.next != null) {
+				System.out.print(l.val + "->");
+				l = l.next;
+			}
+			System.out.println(l.val);
+		}
+
+	}
+
 	public static <K, V> void printMap(Map<K, V> map) {
 		for (Map.Entry<K, V> entry : map.entrySet())
 			System.out.print(entry.getKey() + " " + entry.getValue() + ",");
