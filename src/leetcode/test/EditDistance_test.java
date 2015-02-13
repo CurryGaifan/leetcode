@@ -1,13 +1,13 @@
 package leetcode.test;
 
 import junit.framework.TestCase;
-import leetcode.EditDistance;
+import leetcode.EditDistance_2;
 
 import org.junit.Test;
 
 public class EditDistance_test extends TestCase {
 
-	EditDistance q = new EditDistance();
+	EditDistance_2 q = new EditDistance_2();
 
 	@Test
 	public void test1() {

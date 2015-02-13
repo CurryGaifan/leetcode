@@ -13,35 +13,29 @@ public class EditDistance_2 {
 		char[] w1 = word1.toCharArray();
 		char[] w2 = word2.toCharArray();
 
-		int[][] dp = new int[word1.length() + 1][word2.length() + 2];
+		int[][] dp = new int[word1.length() + 1][word2.length() + 1];
 
-		int difSteps = getMin(w1.length, w2.length, w1, w2, 0, 0);
-		// return Math.min(difSteps, Math.max(word1.length(), word2.length()));
+		for (int i = 0; i < dp.length; i++) {
+			dp[i][0] = i;
+		}
 
-		return difSteps;
-	}
+		for (int j = 0; j < dp[0].length; j++) {
+			dp[0][j] = j;
+		}
 
-	private int getMin(int i, int j, char[] w1, char[] w2, int xStep, int yStep) {
-		if (j == 0 && i == 0)
-			return Math.max(xStep, yStep);
-
-		if (i > 0 && j > 0 && w1[i - 1] == w2[j - 1]) {
-
-			return Math.max(xStep, yStep)
-					+ Math.min(getMin(i - 1, j - 1, w1, w2, 0, 0),
-							Math.max(i - 1, j - 1));
-		} else {
-			if (j == 0) {
-				return getMin(i - 1, j, w1, w2, xStep + 1, yStep);
-			} else if (i == 0) {
-				return getMin(i, j - 1, w1, w2, xStep, yStep + 1);
-			} else {
-				return Math.min(Math.min(
-						getMin(i - 1, j, w1, w2, xStep + 1, yStep),
-						getMin(i, j - 1, w1, w2, xStep, yStep + 1)),
-						getMin(i - 1, j - 1, w1, w2, xStep + 1, yStep + 1));
+		for (int i = 1; i < dp.length; i++) {
+			for (int j = 1; j < dp[0].length; j++) {
+				// System.out.println(i + " " + j);
+				if (w1[i - 1] == w2[j - 1]) {
+					dp[i][j] = dp[i - 1][j - 1];
+				} else {
+					dp[i][j] = Math.min(Math.min(dp[i - 1][j], dp[i][j - 1]),
+							dp[i - 1][j - 1]) + 1;
+				}
 			}
 		}
+
+		return dp[word1.length()][w2.length];
 	}
 
 	public static void main(String[] args) {

@@ -8,6 +8,8 @@ package leetcode;
  * Reference http://blog.csdn.net/zxzxy1988/article/details/8587244
  * 如果A[k/2-1]<B[k/2-1]，那么A[0]~A[k/2-1]一定在第k小的数的序列当中
  * 
+ * ps:Sloved this problem with help.
+ * 
  * @author yanfeixiang
  * 
  */
