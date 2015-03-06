@@ -63,6 +63,14 @@ public class PrintUtil {
 		System.out.println();
 	}
 
+	public static void printArray(char[][] array) {
+		for (char[] t : array) {
+			for (char i : t)
+				System.out.print(i + " ");
+			System.out.println();
+		}
+	}
+
 	public static void printArray(int[] array) {
 		for (int i : array)
 			System.out.print(i + " ");
