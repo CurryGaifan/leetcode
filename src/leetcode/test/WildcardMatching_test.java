@@ -7,13 +7,13 @@ import org.junit.Test;
 
 /*
  * Some examples:
- isMatch("aa","a") ¡ú false
- isMatch("aa","aa") ¡ú true
- isMatch("aaa","aa") ¡ú false
- isMatch("aa", "a*") ¡ú true
- isMatch("aa", ".*") ¡ú true
- isMatch("ab", ".*") ¡ú true
- isMatch("aab", "c*a*b") ¡ú true
+ isMatch("aa","a") ï¿½ï¿½ false
+ isMatch("aa","aa") ï¿½ï¿½ true
+ isMatch("aaa","aa") ï¿½ï¿½ false
+ isMatch("aa", "a*") ï¿½ï¿½ true
+ isMatch("aa", ".*") ï¿½ï¿½ true
+ isMatch("ab", ".*") ï¿½ï¿½ true
+ isMatch("aab", "c*a*b") ï¿½ï¿½ true
  */
 
 public class WildcardMatching_test extends TestCase {
