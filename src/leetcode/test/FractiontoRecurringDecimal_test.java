@@ -13,10 +13,10 @@ public class FractiontoRecurringDecimal_test extends TestCase {
 	public void test1() {
 		assertEquals(q.fractionToDecimal(-5, 7), "-0.(714285)");
 		assertEquals(q.fractionToDecimal(-2147483648, 1), "-2147483648");
+		assertEquals(q.fractionToDecimal(-2147483648, -1), "2147483648");
 		assertEquals(q.fractionToDecimal(-2147483648, -2), "" + -2147483648
 				/ -2);
 		assertEquals(q.fractionToDecimal(-2147483648, -2147483648), "1");
-		assertEquals(-1d / -2147483648d, "0.0000000004656612873077392578125");
 		assertEquals(q.fractionToDecimal(-1, -2147483648),
 				"0.0000000004656612873077392578125");
 	}

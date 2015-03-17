@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
+import util.PrintUtil;
+
 /**
  * Given a 2D binary matrix filled with 0's and 1's, find the largest rectangle
  * containing all ones and return its area.
@@ -18,113 +20,48 @@ public class MaximalRectangle {
 		if (matrix.length == 0)
 			return 0;
 
-		Set<String> set = new HashSet<String>();
-		Queue<Node> queue = new LinkedList<Node>();
-		Node f = new Node(0, 0, matrix.length, matrix[0].length);
-		queue.add(f);
-		set.add(f.toString());
 		int max = 0;
 		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix[0].length; j++) {
-				// System.out.println(i + " " + j + " " + matrix[i][j]);
-				if (matrix[i][j] == '0') {
-					int jstart = j;
-					while (j < matrix[0].length && matrix[i][j] == '0')
-						j++;
-					j--;
 
-					int size = queue.size();
-//					System.out.println("queue.size():" + size);
-					for (int k = 0; k < size; k++) {
-						Node node = queue.remove();
-						set.remove(node.toString());
-
-//						 if (queue.size() != set.size())
-//						 System.out.println("something wrong.");
-
-						if (node.i <= i && node.i + node.iLength - 1 >= i
-								&& node.j <= jstart
-								&& node.j + node.jLength - 1 >= j
-								&& node.iLength * node.jLength > max) {
-							if (node.i != i
-									&& (i - node.i) * node.jLength > max)
-								// queue.add(new Node(node.i, node.j, i -
-								// node.i,
-								// node.jLength));
-								max = Math
-										.max(max, (i - node.i) * node.jLength);
-
-							if (node.j != jstart
-									&& node.iLength * (jstart - node.j) > max
-									&& !set.contains(new Node(node.i, node.j,
-											node.iLength, jstart - node.j)
-											.toString())) {
-								Node _n = new Node(node.i, node.j,
-										node.iLength, jstart - node.j);
-								queue.add(_n);
-								set.add(_n.toString());
-							}
-
-							if (node.i + node.iLength - 1 != i
-									&& (node.i + node.iLength - 1 - i)
-											* node.jLength > max
-									&& !set.contains(new Node(i + 1, node.j,
-											node.i + node.iLength - 1 - i,
-											node.jLength).toString())) {
-								Node _n = new Node(i + 1, node.j, node.i
-										+ node.iLength - 1 - i, node.jLength);
-								queue.add(_n);
-								set.add(_n.toString());
-							}
-
-							if (node.j + node.jLength - 1 != j
-									&& node.iLength
-											* (node.j + node.jLength - 1 - j) > max
-									&& !set.contains(new Node(node.i, j + 1,
-											node.iLength, node.j + node.jLength
-													- 1 - j).toString())) {
-
-								Node _n = new Node(node.i, j + 1, node.iLength,
-										node.j + node.jLength - 1 - j);
-								queue.add(_n);
-								set.add(_n.toString());
-							}
-						} else if (node.i + node.iLength - 1 < i) {
-							max = Math.max(max, node.iLength * node.jLength);
-
-						} else if (node.iLength * node.jLength > max
-								&& !set.contains(node.toString())) {
-							queue.add(node);
-							set.add(node.toString());
-						}
+			char[] init = new char[matrix[0].length];
+			for (int k = 0; k < init.length; k++) {
+				init[k] = '1';
+			}
+			boolean hasOne = true;
+			for (int j = i; j < matrix.length && hasOne; j++) {
+				andArray(init, matrix[j]);
+//				System.out.print(i + " " + j + ":");
+//				PrintUtil.printArray(init);
+				hasOne = false;
+				int startIndex = 0;
+				for (int l = 0; l < init.length; l++) {
+					if (init[l] == '0') {
+//						System.out.println("l:" + l + " " + (l - startIndex)
+//								* (j - i + 1));
+						max = Math.max(max, (l - startIndex) * (j - i + 1));
+						startIndex = l + 1;
+					} else if (!hasOne) {
+						hasOne = true;
 					}
+				}
+				if (init[init.length - 1] == '1') {
+//					System.out
+//							.println((init.length - startIndex) * (j - i + 1));
+					max = Math.max(max, (init.length - startIndex)
+							* (j - i + 1));
 				}
 
 			}
 
 		}
-		for (Node n : queue) {
-			max = Math.max(max, n.iLength * n.jLength);
-		}
 		return max;
 	}
 
-	public class Node {
-
-		int i;
-		int j;
-		int iLength;
-		int jLength;
-
-		public Node(int x, int y, int xLenght, int yLength) {
-			this.i = x;
-			this.j = y;
-			this.iLength = xLenght;
-			this.jLength = yLength;
-		}
-
-		public String toString() {
-			return i + " " + j + " " + iLength + " " + jLength;
+	private void andArray(char[] init, char[] cs) {
+		for (int i = 0; i < init.length; i++) {
+			if (cs[i] == '0') {
+				init[i] = '0';
+			}
 		}
 
 	}
@@ -137,7 +74,7 @@ public class MaximalRectangle {
 		// System.out.println(new MaximalRectangle()
 		// .maximalRectangle(new char[][] { { '0' } }));
 
-		String str_1 = "1111111111111101001111111100111011111111_"
+   String str_1 = "1111111111111101001111111100111011111111_"
 				+ "1111011011111111101101111101111111111111_"
 				+ "0111101011111101101101101111111111111111_"
 				+ "0101101011111111111101111111010110111111_"
@@ -489,7 +426,9 @@ public class MaximalRectangle {
 		for (int i = 0; i < strs.length; i++) {
 			c[i] = strs[i].toCharArray();
 		}
-
+		long start = System.currentTimeMillis();
 		System.out.println(new MaximalRectangle().maximalRectangle(c));
+		System.out.println(System.currentTimeMillis() - start);
+
 	}
 }

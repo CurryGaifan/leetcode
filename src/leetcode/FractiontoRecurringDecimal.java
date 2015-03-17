@@ -20,61 +20,42 @@ public class FractiontoRecurringDecimal {
 			return "0";
 		if (denominator == 0)
 			return "NANA";
-		if (numerator == denominator)
-			return "1";
-		boolean numEMIN = false;
-		boolean minP = false;
+		boolean po = true;
+		if (numerator > 0 && denominator > 0) {
+			numerator = -numerator;
+			denominator = -denominator;
+		} else if (numerator < 0 && denominator > 0) {
+			denominator = -denominator;
+			po = false;
+		} else if (numerator > 0 && denominator < 0) {
+			numerator = -numerator;
+			po = false;
+		}
+
+		int left = numerator / denominator;
+//		System.out.println(numerator + " " + denominator);
+//		System.out.println(left);
 
 		String result = "";
-		int fac;
-		if (numerator == Integer.MIN_VALUE) {
-			numEMIN = true;
-			int left = numerator / denominator;
-			if (left > 0) {
-				minP = true;
-				fac = numerator % denominator;
-			} else {
-				fac = -(numerator % denominator);
-			}
-
-			result = "" + left;
-
+		if (numerator == Integer.MIN_VALUE && denominator == -1) {
+			if (po)
+				result = "2147483648";
+			else
+				result = "" + left;
 		} else {
-			boolean po = true;
-			if (numerator > 0 && denominator > 0) {
-
-			} else if (numerator < 0 && denominator > 0) {
-				numerator = -numerator;
-				po = false;
-			} else if (numerator > 0 && denominator < 0) {
-				denominator = -denominator;
-				po = false;
-			} else {
-				numerator = -numerator;
-				denominator = -denominator;
-			}
-
-			int left = numerator / denominator;
-			result = (po ? "" : "-") + left;
-			fac = numerator % denominator;
+			if (po)
+				result = "" + left;
+			else
+				result = "-" + left;
 		}
+
+//		System.out.println(result);
 
 		if (numerator % denominator != 0)
 			result = result + ".";
-		System.out.println("1:  " + result);
-
-		result += getRight(fac, denominator);
-
-		return result;
-
-	}
-
-	private String getRight(int fac, int denominator) {
-		System.out.println("fac: " + fac + ",denominator: " + denominator);
-		String result = "";
-		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
-
-		for (int i = 0; fac != 0 && !map.containsKey(fac); i++) {
+		Map<Long, Integer> map = new HashMap<Long, Integer>();
+		long fac = numerator % denominator;
+		for (int i = result.length(); fac != 0 && !map.containsKey(fac); i++) {
 			map.put(fac, i);
 			fac *= 10;
 			result += fac / denominator;
@@ -85,14 +66,22 @@ public class FractiontoRecurringDecimal {
 			result = result.substring(0, map.get(fac)) + "("
 					+ result.substring(map.get(fac)) + ")";
 		}
-		System.out.println("return :" + result);
+
 		return result;
+
 	}
 
 	public static void main(String[] args) {
 
-		System.out.println(new FractiontoRecurringDecimal().fractionToDecimal(
-				Integer.MIN_VALUE, Integer.MAX_VALUE));
+		// System.out.println(new
+		// FractiontoRecurringDecimal().fractionToDecimal(
+		// Integer.MIN_VALUE, Integer.MAX_VALUE));
+
+		System.out.println((-1) % Integer.MIN_VALUE);
+		System.out.println(1 % Integer.MIN_VALUE);
+		System.out.println((-2f) / Integer.MIN_VALUE);
+		System.out.println(2f / Integer.MIN_VALUE);
+
 	}
 
 }

@@ -6,60 +6,47 @@ import leetcode.struct.TreeNode;
  * A solution using O(n) space is pretty straight forward. Could you devise a
  * constant space solution?
  * 
+ * solve the problem with help.
+ * 
+ * https://leetcode.com/discuss/13034/no-fancy-algorithm-just-simple-and-
+ * powerful-order-traversal
+ * 
  * @author yanfeixiang
  * 
  */
 public class RecoverBinarySearchTree {
 
-	int firstDepth = 0;
-	int secondDepth = 0;
-	TreeNode firstFater;
 	TreeNode first;
 	TreeNode second;
+	TreeNode prev = new TreeNode(Integer.MIN_VALUE);
 
 	public void recoverTree(TreeNode root) {
-		depthFirst(root, 0);
-		// System.out.println(firstDepth + " " + secondDepth);
-		if (second != null) {
-			int tmp = first.val;
-			first.val = second.val;
-			second.val = tmp;
-		} else {
-			int tmp = first.val;
-			first.val = firstFater.val;
-			firstFater.val = tmp;
-		}
+		find(root);
+
+		int tmp = first.val;
+		first.val = second.val;
+		second.val = tmp;
 
 	}
 
-	private void depthFirst(TreeNode root, int depth) {
+	private void find(TreeNode root) {
+
 		if (root == null)
 			return;
-		if (root.left != null && root.left.val > root.val) {
-			if (find(root.left, root, depth + 1))
-				return;
-		}
-		if (root.right != null && root.right.val < root.val) {
-			if (find(root.right, root, depth + 1))
-				return;
+
+		find(root.left);
+
+		if (first == null && prev.val >= root.val) {
+			first = prev;
 		}
 
-		depthFirst(root.left, depth + 1);
-		depthFirst(root.right, depth + 1);
-
-	}
-
-	private boolean find(TreeNode tn, TreeNode f, int depth) {
-		if (firstDepth == 0) {
-			firstFater = f;
-			firstDepth = depth;
-			first = tn;
-			return false;
-		} else {
-			secondDepth = depth;
-			second = tn;
-			return true;
+		if (first != null && prev.val >= root.val) {
+			second = root;
 		}
+		prev = root;
+
+		find(root.right);
+
 	}
 
 	public static void main(String[] args) {

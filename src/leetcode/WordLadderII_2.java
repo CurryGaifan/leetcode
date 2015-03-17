@@ -15,33 +15,19 @@ import util.PrintUtil;
  * @author yanfeixiang
  * 
  */
-public class WordLadderII {
+public class WordLadderII_2 {
 	public List<List<String>> findLadders(String start, String end,
 			Set<String> dict) {
-		List<List<String>> result = new ArrayList<List<String>>();
-		if (getLength(start, end) == 1) {
-			List<String> d = new ArrayList<String>();
-			d.add(start);
-			d.add(end);
-			result.add(d);
-		}
-
-		dict.remove(start);
-		dict.remove(end);
-
 		Set<String> oneStep = new HashSet<String>();
-		for (int i = 0; i < end.length(); i++) {
-			char[] ch = end.toCharArray();
-			for (int j = 0; j < 26; j++) {
-				ch[i] = (char) ('a' + j);
-				if (dict.contains(new String(ch))) {
-					oneStep.add(new String(ch));
-				}
-
+		for (String str : dict) {
+			if (getLength(end, str) == 1) {
+				oneStep.add(str);
 			}
 		}
 
 		// System.out.println(oneStep);
+
+		List<List<String>> result = new ArrayList<List<String>>();
 
 		List<List<String>> tmp = new ArrayList<List<String>>();
 		List<String> startStr = new ArrayList<String>();
@@ -53,34 +39,28 @@ public class WordLadderII {
 
 			// List<String>[] path = dict.toArray(new List[tmp.size()]);
 			List<List<String>> clone = new ArrayList<List<String>>(tmp);
-			Set<String> needRemoves = new HashSet<String>();
+
 			tmp.clear();
-			for (List<String> list : clone) {
-				String lastStr = list.get(list.size() - 1);
+			for (String str : strs) {
+				boolean canGo = false;
 
-				for (int i = 0; i < lastStr.length(); i++) {
-					char[] ch = lastStr.toCharArray();
-					for (int j = 0; j < 26; j++) {
-						ch[i] = (char) ('a' + j);
-						if (dict.contains(new String(ch))) {
-							List<String> _list = new ArrayList<String>(list);
-							_list.add(new String(ch));
-							tmp.add(_list);
-							needRemoves.add(new String(ch));
-
-							if (oneStep.contains(new String(ch))) {
-								_list.add(end);
-								result.add(_list);
-							}
+				boolean oneStepGo = oneStep.contains(str);
+				for (List<String> list : clone) {
+					if (getLength(list.get(list.size() - 1), str) == 1) {
+						List<String> _list = new ArrayList<String>(list);
+						_list.add(str);
+						tmp.add(_list);
+						canGo = true;
+						if (oneStepGo) {
+							_list.add(end);
+							result.add(_list);
+							// System.out.println("find");
 						}
-
 					}
 				}
+				if (canGo)
+					dict.remove(str);
 
-			}
-
-			for (String needRemove : needRemoves) {
-				dict.remove(needRemove);
 			}
 
 			if (dict.size() == strs.length) {
@@ -775,14 +755,15 @@ public class WordLadderII {
 				"miens", "yummy", "grade", "proxy", "hopes", "girth", "deter",
 				"dowry", "aorta", "paean", "corms", "giant", "shank", "where",
 				"means", "years", "vegan", "derek", "tales" });
-		List<List<String>> list = new WordLadderII().findLadders("nanny",
+		List<List<String>> list = new WordLadderII_2().findLadders("nanny",
 				"aloud", dict);
 		PrintUtil.printListList(list);
 
 		Set<String> dict_2 = new HashSet<String>();
-		Collections.addAll(dict_2, new String[] { "a", "b" ,"c"});
+		Collections.addAll(dict_2, new String[] { "hot", "dot", "dog", "lot",
+				"log" });
 
-		PrintUtil.printListList(new WordLadderII().findLadders("a", "c",
+		PrintUtil.printListList(new WordLadderII_2().findLadders("hit", "cog",
 				dict_2));
 	}
 }
