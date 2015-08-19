@@ -15,50 +15,50 @@ public class HeapSort {
 		}
 	}
 	
-	//  ÐÂ¼ÓÈëi½áµã  Æä¸¸½áµãÎª(i - 1) / 2
+	//  æ–°åŠ å…¥iç»“ç‚¹  å…¶çˆ¶ç»“ç‚¹ä¸º(i - 1) / 2
 	void MinHeapFixup(int a[], int i) {
 		int j, temp;
 
 		temp = a[i];
-		j = (i - 1) / 2; //¸¸½áµã
+		j = (i - 1) / 2; //çˆ¶ç»“ç‚¹
 		while (j >= 0 && i != 0) {
 			if (a[j] <= temp)
 				break;
 
-			a[i] = a[j]; //°Ñ½Ï´óµÄ×Ó½áµãÍùÏÂÒÆ¶¯,Ìæ»»ËüµÄ×Ó½áµã
+			a[i] = a[j]; //æŠŠè¾ƒå¤§çš„å­ç»“ç‚¹å¾€ä¸‹ç§»åŠ¨,æ›¿æ¢å®ƒçš„å­ç»“ç‚¹
 			i = j;
 			j = (i - 1) / 2;
 		}
 		a[i] = temp;
 	}
 
-	//ÔÚ×îÐ¡¶ÑÖÐ¼ÓÈëÐÂµÄÊý¾ÝnNum
+	//åœ¨æœ€å°å †ä¸­åŠ å…¥æ–°çš„æ•°æ®nNum
 	void MinHeapAddNumber(int a[], int n, int nNum) {
 		a[n] = nNum;
 		MinHeapFixup(a, n);
 	}
 
-	//  ´Ói½Úµã¿ªÊ¼µ÷Õû,nÎª½Úµã×ÜÊý ´Ó0¿ªÊ¼¼ÆËã i½ÚµãµÄ×Ó½ÚµãÎª 2*i+1, 2*i+2
+	//  ä»ŽièŠ‚ç‚¹å¼€å§‹è°ƒæ•´,nä¸ºèŠ‚ç‚¹æ€»æ•° ä»Ž0å¼€å§‹è®¡ç®— ièŠ‚ç‚¹çš„å­èŠ‚ç‚¹ä¸º 2*i+1, 2*i+2
 	void MinHeapFixdown(int a[], int i, int n) {
 		int j, temp;
 
 		temp = a[i];
 		j = 2 * i + 1;
 		while (j < n) {
-			if (j + 1 < n && a[j + 1] < a[j]) //ÔÚ×óÓÒº¢×ÓÖÐÕÒ×îÐ¡µÄ
+			if (j + 1 < n && a[j + 1] < a[j]) //åœ¨å·¦å³å­©å­ä¸­æ‰¾æœ€å°çš„
 				j++;
 
 			if (a[j] >= temp)
 				break;
 
-			a[i] = a[j]; //°Ñ½ÏÐ¡µÄ×Ó½áµãÍùÉÏÒÆ¶¯,Ìæ»»ËüµÄ¸¸½áµã
+			a[i] = a[j]; //æŠŠè¾ƒå°çš„å­ç»“ç‚¹å¾€ä¸Šç§»åŠ¨,æ›¿æ¢å®ƒçš„çˆ¶ç»“ç‚¹
 			i = j;
 			j = 2 * i + 1;
 		}
 		a[i] = temp;
 	}
 
-	//ÔÚ×îÐ¡¶ÑÖÐÉ¾³ýÊý
+	//åœ¨æœ€å°å †ä¸­åˆ é™¤æ•°
 	void MinHeapDeleteNumber(int a[], int n) {
 		Swap(a, 0, n - 1);
 		MinHeapFixdown(a, 0, n - 1);
@@ -71,7 +71,7 @@ public class HeapSort {
 
 	}
 
-	//½¨Á¢×îÐ¡¶Ñ
+	//å»ºç«‹æœ€å°å †
 	void MakeMinHeap(int a[], int n) {
 		for (int i = n / 2 - 1; i >= 0; i--)
 			MinHeapFixdown(a, i, n);

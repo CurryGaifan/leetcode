@@ -6,10 +6,12 @@ import java.util.*;
  * For example:
  * <p/>
  * 2, [[1,0]]
- * There are a total of 2 courses to take. To take course 1 you should have finished course 0. So it is possible.
+ * There are a total of 2 courses to take.
+ * To take course 1 you should have finished course 0. So it is possible.
  * <p/>
  * 2, [[1,0],[0,1]]
- * There are a total of 2 courses to take. To take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.
+ * There are a total of 2 courses to take. To take course 1 you should have finished course 0, and to
+ * take course 0 you should also have finished course 1. So it is impossible.
  */
 public class CourseSchedule_2 {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
