@@ -9,11 +9,9 @@ import java.util.Map;
  * Created by gaifan on 2016/8/18.
  */
 public class HouseRobberIII {
-    public int rob(TreeNode root) {
-        return rob(root, new HashMap<TreeNode, Integer>());
-    }
+    private static final Map<TreeNode, Integer> map = new HashMap<>();
 
-    public int rob(TreeNode root, Map<TreeNode, Integer> map) {
+    public int rob(TreeNode root) {
         if (map.containsKey(root))
             return map.get(root);
 
@@ -31,9 +29,8 @@ public class HouseRobberIII {
         max = Math.max(max, left + right);
         map.put(root, max);
         return max;
-
-
     }
+    
 
     public static void main(String[] args) {
         TreeNode tn = new TreeNode("3,2,3,#,3,#,1");
